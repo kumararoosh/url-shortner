@@ -8,7 +8,6 @@ import (
 	"math/rand"
 	"net/http"
 	"regexp"
-	"time"
 
 	_ "github.com/lib/pq"
 )
