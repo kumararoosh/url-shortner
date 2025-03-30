@@ -2,9 +2,30 @@ version: '3.8'
 services:
   db:
     image: postgres:15
+    container_name: shortner-db
     environment: 
       POSTGRES_USER: shorty
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: shortener
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgres/data
+
+  app:
+    build: .
+    container_name: url-shortner
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: shorty
+      DB_PASSWORD: secret
+      DB_NAME: shortener
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  postgres_data:
